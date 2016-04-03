@@ -24,11 +24,11 @@ namespace MovRec
             Stream stream = new NetworkStream(socket);
             BinaryReader bin = new BinaryReader(stream);
 
-
             byte[] len = new byte[2];
             byte[] tem = new byte[3];
             int byteToRead;
             byte[] pacchetto;
+            int sizewin = 200;
 
             while (!(tem[0] == 0xFF && tem[1] == 0x32)) // cerca la sequenza FF-32
             {
@@ -61,6 +61,7 @@ namespace MovRec
             }
 
             int numSensori = (byteToRead - 2) / 52; // calcolo del numero di sensori
+            Console.WriteLine("Numero sensori: " + numSensori);
             pacchetto[0] = 0xFF; // copia dei primi elementi
             pacchetto[1] = 0x32;
             pacchetto[2] = tem[2];
@@ -79,7 +80,9 @@ namespace MovRec
 
             List<List<double>> array = new List<List<double>>(); // salvataggio dati
             int maxSensori = 10;
-
+            // Set a variable to the My Documents path.
+            string mydocpath =
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             int[] t = new int[maxSensori];
 
@@ -88,7 +91,12 @@ namespace MovRec
                 array.Add(new List<double>()); // una lista per ogni sensore
                 t[x] = 5 + (52 * x);
             }
-            while (true)
+            int tempwin = 0;
+            using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.txt"))
+            {
+                outputFile.WriteLine("time; acc1; acc2; acc3; giro1; giro2; giro3; magn1; magn2; magn3;");
+            }
+            while (tempwin < sizewin)
             {
                 for (int i = 0; i < numSensori; i++)
                 {
@@ -121,13 +129,27 @@ namespace MovRec
 
                 for (int j = 0; j < numSensori; j++)
                 {
-                    for (int tr = 0; tr < 13; tr++)
+                    using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.txt", true))
+                    {
+                        outputFile.Write(tempwin + "; ");
+                    }
+                    for (int tr = 0; tr < 9; tr++) //con 13 stampo anche i quaternioni
                     {
                         // esempio output su console
                         Console.Write(array[j][tr] + "; ");
+                        // Append text to an existing file named "data.txt".
+                        using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.txt", true))
+                        {
+                            outputFile.Write(array[j][tr] + "; ");
+                        }
+                    }
+                    using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.txt", true))
+                    {
+                        outputFile.WriteLine();
                     }
                     Console.WriteLine();
                     array[j].RemoveRange(0, 13); // cancellazione dati
+                    tempwin++;
                 }
 
                 Console.WriteLine();
