@@ -28,7 +28,7 @@ namespace MovRec
             byte[] tem = new byte[3];
             int byteToRead;
             byte[] pacchetto;
-            int sizewin = 200;
+            int sizewin = 30;
 
             while (!(tem[0] == 0xFF && tem[1] == 0x32)) // cerca la sequenza FF-32
             {
@@ -92,11 +92,12 @@ namespace MovRec
                 t[x] = 5 + (52 * x);
             }
             int tempwin = 0;
+            double[,,] sensorValue = new double[numSensori,sizewin,9];
             using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.txt"))
             {
-                outputFile.WriteLine("time; acc1; acc2; acc3; giro1; giro2; giro3; magn1; magn2; magn3;");
+                outputFile.WriteLine("time; sensor; acc1; acc2; acc3; giro1; giro2; giro3; magn1; magn2; magn3;");
             }
-            while (tempwin < sizewin)
+            while (tempwin < sizewin * numSensori)
             {
                 for (int i = 0; i < numSensori; i++)
                 {
@@ -131,12 +132,14 @@ namespace MovRec
                 {
                     using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.txt", true))
                     {
-                        outputFile.Write(tempwin + "; ");
+                        outputFile.Write(tempwin + "; " + j + "; ");
                     }
                     for (int tr = 0; tr < 9; tr++) //con 13 stampo anche i quaternioni
                     {
                         // esempio output su console
                         Console.Write(array[j][tr] + "; ");
+                        //salvo nella matrice
+                        sensorValue[j, tempwin / numSensori, tr] = array[j][tr];
                         // Append text to an existing file named "data.txt".
                         using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.txt", true))
                         {
@@ -152,6 +155,10 @@ namespace MovRec
                     tempwin++;
                 }
 
+                using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.txt", true))
+                {
+                    outputFile.WriteLine();
+                }
                 Console.WriteLine();
 
                 if (numSensori < 5) // lettura pacchetto seguente
@@ -163,6 +170,13 @@ namespace MovRec
                     pacchetto = bin.ReadBytes(byteToRead + 6);
                 }
             }
+            Funzioni.printmultimatrix(sensorValue);
+
+            double[,,] modulo = new double [sensorValue.GetLength(0), sensorValue.GetLength(1), 2];
+            modulo = Funzioni.modulo(sensorValue);
+
+            Funzioni.printmultimatrix(modulo);
+
         }
     }
 }
