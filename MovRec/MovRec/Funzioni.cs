@@ -41,6 +41,49 @@ public class Funzioni
         return smoothed;
     }
 
+    public static double[] derivata(double[] values)
+    {
+        double[] result = new double[values.Length-1];
+
+        for(int i=0; i<result.Length; ++i)
+        {
+            result[i] = values[i + 1] - values[i];
+        }
+
+        return result;
+    }
+
+    //calcola media sul range di valori scelto in chiamata(privatizzare)
+    public static double mediaLocale(double[] values)
+    {
+        double result = 0;
+        for(int i=0; i<values.Length; ++i)
+        {
+            result = result + values[i];
+        }
+        result = result / values.Length;
+
+        return result;
+    }
+
+    //
+    public static double devStandardLocale(double[] values)
+    {
+        double media = mediaLocale(values);
+        double result = 0;
+        for(int i=0; i<values.Length; ++i)
+        {
+            result = result + Math.Pow(values[i] - media, 2);
+        }
+        result = result / values.Length;
+
+        result = Math.Sqrt(result);
+
+        return result;
+
+    }
+
+
     public static void printmultimatrix(double[,,] matrix)
     {
         Console.WriteLine("Matrix print: ");
