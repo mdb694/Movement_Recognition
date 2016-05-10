@@ -20,6 +20,27 @@ public class Funzioni
         return mod;
     }
 
+    public static double[,,] smoothing(double[,,] data, int range)
+    {
+        double[,,] smoothed = new double[data.GetLength(0), data.GetLength(1)-(2*range), data.GetLength(2)];
+        for (int i = 0; i < data.GetLength(0); i++)
+        {
+            int index = 0;
+            for (int j = range; j < data.GetLength(1) - range; j++)
+            {
+                for (int k = 0; k < data.GetLength(2); k++)
+                {
+                    double sum = 0;
+                    for (int s = j - range; s < j + range + 1; s++)
+                        sum = sum + data[i, s, k];
+                    smoothed[i, index, k] = sum / (2 * range + 1);
+                }
+                index++;
+            }
+        }
+        return smoothed;
+    }
+
     public static void printmultimatrix(double[,,] matrix)
     {
         Console.WriteLine("Matrix print: ");
