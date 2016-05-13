@@ -88,7 +88,7 @@ public class MovRecSocket
             t[x] = 5 + (52 * x);
         }
         int tempwin = 0;
-        double[,,] sensorValue = new double[numSensori, sizewin, 9];
+        double[,,] sensorValue = new double[numSensori, sizewin, 13];
         /*            using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.txt"))
                     {
                         outputFile.WriteLine("time; sensor; acc1; acc2; acc3; giro1; giro2; giro3; magn1; magn2; magn3;");
@@ -132,7 +132,7 @@ public class MovRecSocket
                                         outputFile.Write(tempwin + "; " + j + "; ");
                                     }
                 */
-                for (int tr = 0; tr < 9; tr++) //con 13 stampo anche i quaternioni
+                for (int tr = 0; tr < 13; tr++) //con 13 stampo anche i quaternioni
                 {
                     // esempio output su console
                     Console.Write(array[j][tr] + "; ");
