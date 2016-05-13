@@ -52,37 +52,64 @@ public class Funzioni
 
         return result;
     }
+    
 
-    //calcola media sul range di valori scelto in chiamata(privatizzare)
-    public static double mediaLocale(double[] values)
+    //calcola deviazione standard sul range di valori scelto in chiamata
+    public static double[,,] devStandard(double[,,] values, int range)
     {
-        double result = 0;
-        for(int i=0; i<values.Length; ++i)
+        double[,,] result = new double[values.GetLength(0), values.GetLength(1) - (2 * range), values.GetLength(2)];
+
+        for (int i = 0; i < values.GetLength(0); i++)
         {
-            result = result + values[i];
+            int index = 0;
+            for (int j = range; j < values.GetLength(1) - range; j++)
+            {
+                for (int k = 0; k < values.GetLength(2); k++)
+                {
+                    //calcolo media mobile
+                    double sum = 0;
+                    for (int s = j - range; s < j + range + 1; s++)
+                        sum = sum + values[i, s, k];
+                    double media = sum / (2 * range + 1);
+                    //
+
+                    result[i, index, k] = 0;
+                    for(int a = j- range a < j + range + 1; a++)
+                    {
+                        result[i, index, k] = result[i, index, k] + Math.Pow(values[i,a,k] - media, 2);
+                    }
+                    result[i, index, k] = result[i, index, k] / (2 * range + 1);
+
+                    result[i, index, k] = Math.Sqrt(result[i, index, k]);
+                }
+
+                index++;
+            }
         }
-        result = result / values.Length;
 
         return result;
+
     }
 
-    //
-    public static double devStandardLocale(double[] values)
+    public static double[,,] eulero(double[,,] values)
     {
-        double media = mediaLocale(values);
-        double result = 0;
-        for(int i=0; i<values.Length; ++i)
+        double[,,] result = new double[values.GetLength(0), values.GetLength(1),3];
+        for (int i = 0; i < values.GetLength(0); i++)
         {
-            result = result + Math.Pow(values[i] - media, 2);
+            for (int j = 0; j < values.GetLength(1); j++)
+            {
+                result[i, j, 0] = Math.Atan( (2 * values[i, j, 11] * values[i, j, 12] + 2 * values[i, j, 9] * values[i, j, 10]) /
+                                             ( 2 * Math.Pow(values[i, j, 9],2) + 2 * Math.Pow(values[i, j, 12], 2) -1)
+                                             );
+                result[i, j, 1] = -(Math.Asin(2 * values[i, j, 10] * values[i, j, 12] - 2 * values[i, j, 9] * values[i, j, 11]));
+
+                result[i, j, 2] = Math.Atan((2 * values[i, j, 10] * values[i, j, 11] + 2 * values[i, j, 9] * values[i, j, 12]) /
+                                             (2 * Math.Pow(values[i, j, 9], 2) + 2 * Math.Pow(values[i, j, 10], 2) - 1)
+                                             );
+            }
         }
-        result = result / values.Length;
-
-        result = Math.Sqrt(result);
-
         return result;
-
     }
-
 
     public static void printmultimatrix(double[,,] matrix)
     {
