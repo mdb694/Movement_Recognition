@@ -63,11 +63,7 @@
             this.zedGraphControl1.ScrollMinX = 0D;
             this.zedGraphControl1.ScrollMinY = 0D;
             this.zedGraphControl1.ScrollMinY2 = 0D;
-<<<<<<< HEAD
-            this.zedGraphControl1.Size = new System.Drawing.Size(466, 215);
-=======
             this.zedGraphControl1.Size = new System.Drawing.Size(350, 187);
->>>>>>> 38870b9d4bdc395f095ca4b36255c83c0378c4d6
             this.zedGraphControl1.TabIndex = 0;
             this.zedGraphControl1.Load += new System.EventHandler(this.zedGraphControl1_Load);
             // 
@@ -82,17 +78,13 @@
             this.zedGraphControl2.ScrollMinX = 0D;
             this.zedGraphControl2.ScrollMinY = 0D;
             this.zedGraphControl2.ScrollMinY2 = 0D;
-<<<<<<< HEAD
-            this.zedGraphControl2.Size = new System.Drawing.Size(466, 215);
-=======
             this.zedGraphControl2.Size = new System.Drawing.Size(350, 187);
->>>>>>> 38870b9d4bdc395f095ca4b36255c83c0378c4d6
             this.zedGraphControl2.TabIndex = 1;
             this.zedGraphControl2.Load += new System.EventHandler(this.zedGraphControl2_Load);
             // 
             // Sensor1
             // 
-<<<<<<< HEAD
+
             this.Sensor1.Controls.Add(this.zedGraphControl2);
             this.Sensor1.Controls.Add(this.zedGraphControl1);
             this.Sensor1.Location = new System.Drawing.Point(13, 3);
@@ -269,25 +261,12 @@
             this.zedGraphControl9.Size = new System.Drawing.Size(466, 214);
             this.zedGraphControl9.TabIndex = 8;
             this.zedGraphControl9.Load += new System.EventHandler(this.zedGraphControl9_Load);
-=======
-            this.groupBox1.Controls.Add(this.zedGraphControl2);
-            this.groupBox1.Controls.Add(this.zedGraphControl1);
-            this.groupBox1.Location = new System.Drawing.Point(11, 11);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(716, 214);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Sensor1";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
->>>>>>> 38870b9d4bdc395f095ca4b36255c83c0378c4d6
+
             // 
             // Analisi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-<<<<<<< HEAD
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1504, 1037);
@@ -296,11 +275,7 @@
             this.Controls.Add(this.Sensor3);
             this.Controls.Add(this.Sensor2);
             this.Controls.Add(this.Sensor1);
-=======
-            this.ClientSize = new System.Drawing.Size(991, 462);
-            this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
->>>>>>> 38870b9d4bdc395f095ca4b36255c83c0378c4d6
             this.Name = "Analisi";
             this.Text = "Monitoraggio";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
