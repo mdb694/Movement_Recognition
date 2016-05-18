@@ -60,6 +60,8 @@ namespace MovRec
             // draw 
             zedGraphControl1.AxisChange();
 
+            //-----------------------------------------------------------------------------------------
+
             // pane used to draw your second chart
             myPane = new GraphPane();
 
