@@ -2,6 +2,7 @@
 
 public class Funzioni
 {
+    //calcola il modulo dei valori dell'accelerometro e del giroscopio
     public static double [,,] modulo(double[,,] data)
     {
         double[,,] mod = new double[data.GetLength(0), data.GetLength(1), 2];
@@ -20,6 +21,7 @@ public class Funzioni
         return mod;
     }
 
+    //funzione che smussa i picchi di una funzione tramite una media mobile
     public static double[,,] smoothing(double[,,] data, int range)
     {
         double[,,] smoothed = new double[data.GetLength(0), data.GetLength(1)-(2*range), data.GetLength(2)];
@@ -41,6 +43,7 @@ public class Funzioni
         return smoothed;
     }
 
+    //funzione che calcola il rapporto incrementale di un vettore
     public static double[] derivata(double[] values)
     {
         double[] result = new double[values.Length-1];
@@ -74,7 +77,7 @@ public class Funzioni
                     //
 
                     result[i, index, k] = 0;
-                    for(int a = j - range; a < j + range + 1; a++)
+                    for(int a = j- range; a < j + range + 1; a++)
                     {
                         result[i, index, k] = result[i, index, k] + Math.Pow(values[i,a,k] - media, 2);
                     }
@@ -91,6 +94,7 @@ public class Funzioni
 
     }
 
+    //funzione che estrae gli angoli di Eulero, a partire dai quaternioni
     public static double[,,] eulero(double[,,] values)
     {
         double[,,] result = new double[values.GetLength(0), values.GetLength(1),3];
