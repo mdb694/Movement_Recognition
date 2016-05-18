@@ -74,7 +74,7 @@ public class Funzioni
                     //
 
                     result[i, index, k] = 0;
-                    for(int a = j- range a < j + range + 1; a++)
+                    for(int a = j - range; a < j + range + 1; a++)
                     {
                         result[i, index, k] = result[i, index, k] + Math.Pow(values[i,a,k] - media, 2);
                     }
