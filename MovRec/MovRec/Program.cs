@@ -19,7 +19,8 @@ namespace MovRec
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Analisi(modulo));
+            Analisi myAnalisiFrom = new Analisi(modulo);
+            Application.Run(myAnalisiFrom);
 
         }
     }
