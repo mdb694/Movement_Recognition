@@ -40,6 +40,12 @@ public class Recognizer
 
         return result;
     }
+    /*
+    public static int[,,] posizioneCorpo (double[,,] values)
+    {
+        int[,,] = new int[values.GetLength(0), values.GetLength(1), 1];
 
 
+    }
+    */
 }
