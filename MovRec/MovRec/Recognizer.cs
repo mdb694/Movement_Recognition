@@ -40,12 +40,37 @@ public class Recognizer
 
         return result;
     }
-    /*
-    public static int[,,] posizioneCorpo (double[,,] values)
+    
+    public static int[] posizioneCorpo (double[,,] values)
     {
-        int[,,] = new int[values.GetLength(0), values.GetLength(1), 1];
-
-
+        int[] result = new int[values.GetLength(1)];
+        for(int i=0; i< values.GetLength(1); i++)
+        {
+            if(values[0,i,0] < 2.7)
+            {
+                result[i] = 0;//lay
+            }
+            else
+            {
+                if (values[0, i, 0] >= 2.7 && values[0, i, 0] < 3.7)
+                {
+                    result[i] = 1;//LaySit
+                }
+                else
+                {
+                    if (values[0, i, 0] >= 3.7 && values[0, i, 0] < 7)
+                    {
+                        result[i] = 2;//Sit
+                    }
+                    else
+                    {
+                        result[i] = 3;//Stand
+                    }
+                }
+            }
+            
+        }
+        return result;
     }
-    */
+    
 }
