@@ -58,6 +58,8 @@ public class Funzioni
     
 
     //calcola deviazione standard sul range di valori scelto in chiamata
+    //input: result della funz modulo [5,200,2]
+    //output: [5,180,2]
     public static double[,,] devStandard(double[,,] values, int range)
     {
         double[,,] result = new double[values.GetLength(0), values.GetLength(1) - (2 * range), values.GetLength(2)];
