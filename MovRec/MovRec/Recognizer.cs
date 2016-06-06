@@ -3,6 +3,8 @@
 public class Recognizer
 {
     //funzione che,data una finisestra temporale di N istanti, stabilisce se un corpo è fermo o no
+    //input devStandard [5,180(range=10),2]
+    //output bool stazionamneto [5,180,1]
 	public static bool[,,] stazionamento(double[,,] values)
     {
         bool[,,] result = new bool[values.GetLength(0), values.GetLength(1), 1];
@@ -24,6 +26,7 @@ public class Recognizer
 
         return result;
     }
+
 
     //funzione che calcola per ogni istante della finestra, l'angolo theta tra il vettore che punta al nord magnetico e l'asse z del sistema mondo, sul piano x-z
     public static double[,,] orientamento(double[,,] values)
