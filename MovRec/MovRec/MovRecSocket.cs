@@ -24,7 +24,7 @@ public class MovRecSocket
         byte[] tem = new byte[3];
         int byteToRead;
         byte[] pacchetto;
-        int sizewin = 100;
+        int sizewin = 500;
 
         while (!(tem[0] == 0xFF && tem[1] == 0x32)) // cerca la sequenza FF-32
         {

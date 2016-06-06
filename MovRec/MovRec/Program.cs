@@ -16,10 +16,12 @@ namespace MovRec
             double[,,] modulo = new double [sensorValue.GetLength(0), sensorValue.GetLength(1), 2];
             modulo = Funzioni.modulo(sensorValue);
             Funzioni.printmultimatrix(modulo);
+            double[,,] theta = new double[sensorValue.GetLength(0), sensorValue.GetLength(1), 1];
+            theta = Recognizer.orientamento(sensorValue);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Analisi myAnalisiFrom = new Analisi(modulo);
+            Analisi myAnalisiFrom = new Analisi(modulo, theta);
             Application.Run(myAnalisiFrom);
 
         }
