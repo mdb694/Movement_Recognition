@@ -18,6 +18,8 @@ namespace MovRec
             Funzioni.printmultimatrix(modulo);
             double[,,] theta = new double[sensorValue.GetLength(0), sensorValue.GetLength(1), 1];
             theta = Recognizer.orientamento(sensorValue);
+            bool[,,]staz = Recognizer.stazionamento(Funzioni.devStandard(modulo, 10));
+            Funzioni.printmultimatrixbool(staz);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

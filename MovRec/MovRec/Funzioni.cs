@@ -131,4 +131,22 @@ public class Funzioni
             Console.WriteLine();
         }
     }
+
+    public static void printmultimatrixbool(bool[,,] matrix)
+    {
+        Console.WriteLine("Matrix print: ");
+        for (int i = 0; i < matrix.GetLength(1); i++)
+        {   
+            for (int j = 0; j < matrix.GetLength(2); j++)
+            {
+                Console.Write("istante " + i + "  ");
+                for (int k = 0; k < matrix.GetLength(0); k++)
+                {
+                    Console.Write(matrix[k, i, j] + "; ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+    }
 }
