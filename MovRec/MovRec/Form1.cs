@@ -14,9 +14,11 @@ namespace MovRec
     public partial class Analisi : Form
     {
         double[,,] mod;
-        public Analisi(double[,,] mod)
+        double[,,] theta;
+        public Analisi(double[,,] mod,double[,,]theta)
         {
             this.mod = mod;
+            this.theta = theta;
             InitializeComponent();
         }
 
@@ -190,6 +192,19 @@ namespace MovRec
             }
             myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
             zedGraphControl10.AxisChange();
+            //STAMPA THETA
+            myPane = new GraphPane();
+            listPointsOne = new PointPairList();
+            myPane = zedGraphControl11.GraphPane;
+            myPane.Title.Text = "Theta";
+            myPane.XAxis.Title.Text = "Tempo";
+            myPane.YAxis.Title.Text = "THETA";
+            for (int i = 0; i < mod.GetLength(1); i++)
+            {
+                listPointsOne.Add(i, theta[0, i, 0]);
+            }
+            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Blue, SymbolType.Circle);
+            zedGraphControl11.AxisChange();
         }
 
         private void zedGraphControl1_Load(object sender, EventArgs e)
@@ -228,6 +243,16 @@ namespace MovRec
         }
 
         private void zedGraphControl10_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void zedGraphControl11_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
         {
 
         }
