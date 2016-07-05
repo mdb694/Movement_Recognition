@@ -117,6 +117,33 @@ public class Funzioni
         return result;
     }
 
+    public static double[,,] eliminaDiscont(double[,,] values)
+    {
+        double[,,] result = new double[values.GetLength(0),values.GetLength(1),values.GetLength(2)];
+        for (int i = 0; i < values.GetLength(0); i++)
+        {
+            for (int j = 1; j < values.GetLength(1); j++)
+            {
+                if (Math.Abs((values[i, j - 1, 0]) - (values[i, j, 0])) > (160 * Math.PI /180.0))
+                {
+                    if ((values[i, j - 1, 0]) > (values[i, j, 0]))
+                    {
+                        result[i, j, 0] = values[i, j, 0] + Math.PI * 2;
+                    }
+                    else if ((values[i, j - 1, 0]) < (values[i, j, 0]))
+                    {
+                        result[i, j, 0] = values[i, j, 0] - Math.PI * 2;
+                    }
+
+                }
+                else
+                    result[i, j, 0] = values[i, j, 0];
+
+            }
+        }
+        return result;
+    }
+
     public static void printmultimatrix(double[,,] matrix)
     {
         Console.WriteLine("Matrix print: ");
