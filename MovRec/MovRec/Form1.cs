@@ -205,6 +205,8 @@ namespace MovRec
             }
             myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Blue, SymbolType.Circle);
             zedGraphControl11.AxisChange();
+
+            Graphics deadreck = this.CreateGraphics();
         }
 
         private void zedGraphControl1_Load(object sender, EventArgs e)

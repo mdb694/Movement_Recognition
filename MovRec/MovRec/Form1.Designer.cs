@@ -47,6 +47,7 @@
             this.zedGraphControl9 = new ZedGraph.ZedGraphControl();
             this.zedGraphControl11 = new ZedGraph.ZedGraphControl();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.Sensor1.SuspendLayout();
             this.Sensor2.SuspendLayout();
             this.Sensor3.SuspendLayout();
@@ -347,5 +348,6 @@
         private ZedGraph.ZedGraphControl zedGraphControl9;
         private ZedGraph.ZedGraphControl zedGraphControl11;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
