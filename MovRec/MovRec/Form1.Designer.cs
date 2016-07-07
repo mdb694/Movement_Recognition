@@ -48,6 +48,7 @@
             this.zedGraphControl11 = new ZedGraph.ZedGraphControl();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.zedGraphControl12 = new ZedGraph.ZedGraphControl();
             this.Sensor1.SuspendLayout();
             this.Sensor2.SuspendLayout();
             this.Sensor3.SuspendLayout();
@@ -300,6 +301,22 @@
             this.richTextBox1.TabIndex = 10;
             this.richTextBox1.Text = "";
             // 
+            // zedGraphControl12
+            // 
+            this.zedGraphControl12.Location = new System.Drawing.Point(1298, 198);
+            this.zedGraphControl12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.zedGraphControl12.Name = "zedGraphControl12";
+            this.zedGraphControl12.ScrollGrace = 0D;
+            this.zedGraphControl12.ScrollMaxX = 0D;
+            this.zedGraphControl12.ScrollMaxY = 0D;
+            this.zedGraphControl12.ScrollMaxY2 = 0D;
+            this.zedGraphControl12.ScrollMinX = 0D;
+            this.zedGraphControl12.ScrollMinY = 0D;
+            this.zedGraphControl12.ScrollMinY2 = 0D;
+            this.zedGraphControl12.Size = new System.Drawing.Size(621, 402);
+            this.zedGraphControl12.TabIndex = 11;
+            this.zedGraphControl12.Load += new System.EventHandler(this.zedGraphControl12_Load);
+            // 
             // Analisi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -307,6 +324,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1906, 1037);
+            this.Controls.Add(this.zedGraphControl12);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.zedGraphControl11);
             this.Controls.Add(this.Sensor5);
@@ -349,5 +367,6 @@
         private ZedGraph.ZedGraphControl zedGraphControl11;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ZedGraph.ZedGraphControl zedGraphControl12;
     }
 }

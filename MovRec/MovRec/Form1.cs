@@ -15,10 +15,13 @@ namespace MovRec
     {
         double[,,] mod;
         double[,,] theta;
-        public Analisi(double[,,] mod,double[,,]theta)
+        List<double[]> dead;
+
+        public Analisi(double[,,] mod,double[,,]theta, List<double[]> dead)
         {
             this.mod = mod;
             this.theta = theta;
+            this.dead = dead;
             InitializeComponent();
         }
 
@@ -206,7 +209,19 @@ namespace MovRec
             myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Blue, SymbolType.Circle);
             zedGraphControl11.AxisChange();
 
-            Graphics deadreck = this.CreateGraphics();
+            //DEAD
+            myPane = new GraphPane();
+            listPointsOne = new PointPairList();
+            myPane = zedGraphControl12.GraphPane;
+            myPane.Title.Text = "Dead Reckoning";
+            myPane.XAxis.Title.Text = "X";
+            myPane.YAxis.Title.Text = "Y";
+            foreach (double[] item in dead)
+            {
+                listPointsOne.Add(item[0], item[1]);
+            }
+            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+            zedGraphControl12.AxisChange();
         }
 
         private void zedGraphControl1_Load(object sender, EventArgs e)
@@ -255,6 +270,11 @@ namespace MovRec
         }
 
         private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void zedGraphControl12_Load(object sender, EventArgs e)
         {
 
         }

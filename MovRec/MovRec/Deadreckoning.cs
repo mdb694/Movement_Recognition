@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DeadReckoning
 {
-    public List<double[]> deadreck (double [,,] modulo, double[,,]eulero, int sizeWin)
+    public static List<double[]> deadreck (double [,,] modulo, double[,,]eulero, int sizeWin)
     {
         List<double[]> percorso = new List<double[]>();
         percorso.Add(new double[2] { 0, 0 });

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +21,15 @@ namespace MovRec
             theta = Recognizer.orientamento(sensorValue);
             bool[,,]staz = Recognizer.stazionamento(Funzioni.devStandard(modulo, 10));
             Funzioni.printmultimatrixbool(staz);
+            List<double[]> path = DeadReckoning.deadreck(modulo, Funzioni.eulero(sensorValue), 300);
+            foreach (var item in path)
+            {
+                Console.WriteLine(item[0] + " ::: " + item[1]);
+            }
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Analisi myAnalisiFrom = new Analisi(modulo, theta);
+            Analisi myAnalisiFrom = new Analisi(modulo, theta, path);
             Application.Run(myAnalisiFrom);
 
         }
