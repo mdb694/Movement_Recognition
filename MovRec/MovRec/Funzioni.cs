@@ -24,20 +24,35 @@ public class Funzioni
     //funzione che smussa i picchi di una funzione tramite una media mobile
     public static double[,,] smoothing(double[,,] data, int range)
     {
-        double[,,] smoothed = new double[data.GetLength(0), data.GetLength(1)-(2*range), data.GetLength(2)];
+        double[,,] smoothed = new double[data.GetLength(0), data.GetLength(1), data.GetLength(2)];
+        double sum = 0;
+
         for (int i = 0; i < data.GetLength(0); i++)
         {
-            int index = 0;
-            for (int j = range; j < data.GetLength(1) - range; j++)
+            for (int j = 0; j < data.GetLength(1); j++)
             {
                 for (int k = 0; k < data.GetLength(2); k++)
                 {
-                    double sum = 0;
-                    for (int s = j - range; s < j + range + 1; s++)
-                        sum = sum + data[i, s, k];
-                    smoothed[i, index, k] = sum / (2 * range + 1);
+                    if (j < range)
+                    {
+                        for (int s = 0; s < range + j; s++)
+                            sum = sum + data[i, s, k];
+                        smoothed[i, j, k] = sum / (j + range + 1);
+                    }
+                    else if (j >= range && j <= data.GetLength(1) - range)
+                    {
+                        for (int s = j - range; s < j + range; s++)
+                            sum = sum + data[i, s, k];
+                        smoothed[i, j, k] = sum / (2 * range + 1);
+                    }
+                    else if(j > data.GetLength(1) - range)
+                    {
+                        for (int s = j - range; s < data.GetLength(1); s++)
+                            sum = sum + data[i, s, k];
+                        smoothed[i, j, k] = sum / (data.GetLength(1) - (j - range));
+                    }
+                    sum = 0;
                 }
-                index++;
             }
         }
         return smoothed;
@@ -46,12 +61,13 @@ public class Funzioni
     //funzione che calcola il rapporto incrementale di un vettore
     public static double[] derivata(double[] values)
     {
-        double[] result = new double[values.Length-1];
+        double[] result = new double[values.Length];
 
         for(int i=0; i<result.Length; ++i)
         {
             result[i] = values[i + 1] - values[i];
         }
+        result[values.Length - 1] = 0;
 
         return result;
     }
@@ -62,38 +78,37 @@ public class Funzioni
     //output: [5,180,2]
     public static double[,,] devStandard(double[,,] values, int range)
     {
-        double[,,] result = new double[values.GetLength(0), values.GetLength(1) - (2 * range), values.GetLength(2)];
+        double[,,] result = new double[values.GetLength(0), values.GetLength(1), values.GetLength(2)];
+        double[,,] mediamobile = smoothing(values, 10);
+        double sum = 0;
 
         for (int i = 0; i < values.GetLength(0); i++)
         {
-            int index = 0;
-            for (int j = range; j < values.GetLength(1) - range; j++)
+            for (int j = 0; j < values.GetLength(1); j++)
             {
                 for (int k = 0; k < values.GetLength(2); k++)
                 {
-                    //calcolo media mobile
-                    double sum = 0;
-                    for (int s = j - range; s < j + range + 1; s++)
-                        sum = sum + values[i, s, k];
-                    double media = sum / (2 * range + 1);
-                    //
-
-                    result[i, index, k] = 0;
-                    for(int a = j- range; a < j + range + 1; a++)
+                    if (j < range)
                     {
-                        result[i, index, k] = result[i, index, k] + Math.Pow(values[i,a,k] - media, 2);
+                        for (int s = 0; s < j + range; s++)
+                            sum = sum + Math.Pow(values[i, s, k] - mediamobile[i, s, k], 2);
+                        result[i, j, k] = Math.Sqrt(sum / (range + j + 1));
+                    } else if (j >= range && j <= values.GetLength(1) - range)
+                    {
+                        for (int s = j - range; s < j + range; s++)
+                            sum = sum + Math.Pow(values[i, s, k] - mediamobile[i, s, k], 2);
+                        result[i, j, k] = Math.Sqrt(sum / (2 * range + 1));
+                    } else if (j > values.GetLength(1) - range)
+                    {
+                        for (int s = j - range; s < values.GetLength(1); s++)
+                            sum = sum + Math.Pow(values[i, s, k] - mediamobile[i, s, k], 2);
+                        result[i, j, k] = Math.Sqrt(sum / (values.GetLength(1) - (j - range)));
                     }
-                    result[i, index, k] = result[i, index, k] / (2 * range + 1);
-
-                    result[i, index, k] = Math.Sqrt(result[i, index, k]);
+                    sum = 0;                    
                 }
-
-                index++;
             }
         }
-
         return result;
-
     }
 
     //funzione che estrae gli angoli di Eulero, a partire dai quaternioni
@@ -104,12 +119,12 @@ public class Funzioni
         {
             for (int j = 0; j < values.GetLength(1); j++)
             {
-                result[i, j, 0] = Math.Atan( (2 * values[i, j, 11] * values[i, j, 12] + 2 * values[i, j, 9] * values[i, j, 10]) /
+                result[i, j, 0] = Math.Atan2( (2 * values[i, j, 11] * values[i, j, 12] + 2 * values[i, j, 9] * values[i, j, 10]) ,
                                              ( 2 * Math.Pow(values[i, j, 9],2) + 2 * Math.Pow(values[i, j, 12], 2) -1)
                                              );
                 result[i, j, 1] = -(Math.Asin(2 * values[i, j, 10] * values[i, j, 12] - 2 * values[i, j, 9] * values[i, j, 11]));
 
-                result[i, j, 2] = Math.Atan((2 * values[i, j, 10] * values[i, j, 11] + 2 * values[i, j, 9] * values[i, j, 12]) /
+                result[i, j, 2] = Math.Atan2((2 * values[i, j, 10] * values[i, j, 11] + 2 * values[i, j, 9] * values[i, j, 12]) ,
                                              (2 * Math.Pow(values[i, j, 9], 2) + 2 * Math.Pow(values[i, j, 10], 2) - 1)
                                              );
             }
@@ -124,26 +139,28 @@ public class Funzioni
         {
             for (int j = 1; j < values.GetLength(1); j++)
             {
-                if (Math.Abs((values[i, j - 1, 0]) - (values[i, j, 0])) > (160 * Math.PI /180.0))
+                for (int k = 0; k < values.GetLength(2); k++)
                 {
-                    if ((values[i, j - 1, 0]) > (values[i, j, 0]))
+                    if (Math.Abs((values[i, j - 1, k]) - (values[i, j, k])) > (160 * Math.PI / 180.0))
                     {
-                        result[i, j, 0] = values[i, j, 0] + Math.PI * 2;
-                    }
-                    else if ((values[i, j - 1, 0]) < (values[i, j, 0]))
-                    {
-                        result[i, j, 0] = values[i, j, 0] - Math.PI * 2;
-                    }
+                        if ((values[i, j - 1, k]) > (values[i, j, k]))
+                        {
+                            result[i, j, k] = values[i, j, k] + Math.PI * 2;
+                        }
+                        else if ((values[i, j - 1, k]) < (values[i, j, k]))
+                        {
+                            result[i, j, k] = values[i, j, k] - Math.PI * 2;
+                        }
 
+                    }
+                    else
+                        result[i, j, k] = values[i, j, k];
                 }
-                else
-                    result[i, j, 0] = values[i, j, 0];
-
             }
         }
         return result;
     }
-
+    ///FUNZIONI PER LE STAMPE A CONSOLLE DI DEBUG
     public static void printmultimatrix(double[,,] matrix)
     {
         Console.WriteLine("Matrix print: ");

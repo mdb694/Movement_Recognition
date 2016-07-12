@@ -7,10 +7,14 @@ using System.Windows.Forms;
 
 namespace MovRec
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        private static Analisi myAnalisiForm;
+
+        [STAThread]
+        static void Main()
         {
+            /*
             double[,,] sensorValue = MovRecSocket.acquisition();
             Funzioni.printmultimatrix(sensorValue);
 
@@ -26,12 +30,16 @@ namespace MovRec
             {
                 Console.WriteLine(item[0] + " ::: " + item[1]);
             }
-
+            */
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Analisi myAnalisiFrom = new Analisi(modulo, theta, path);
-            Application.Run(myAnalisiFrom);
+            myAnalisiForm = new Analisi(/*modulo, theta, path*/);
+            Application.Run(myAnalisiForm);
+        }
 
+        public static Analisi getForm()
+        {
+            return myAnalisiForm;
         }
     }
 }

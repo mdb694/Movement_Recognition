@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph;
@@ -16,12 +17,20 @@ namespace MovRec
         double[,,] mod;
         double[,,] theta;
         List<double[]> dead;
+        double[] lastPoint = new double[20];
 
-        public Analisi(double[,,] mod,double[,,]theta, List<double[]> dead)
+        delegate void WriteTextBox(string msg);
+        delegate void SaveTextBox();
+        delegate void UpdateGraph(double[,,] mod, int numCampione);
+        delegate void CleanGraph();
+        delegate void UpdateDeadGraph(List<double[]> path);
+        delegate void ClearDeadGraph();
+
+        public Analisi(/*double[,,] mod,double[,,]theta, List<double[]> dead*/)
         {
-            this.mod = mod;
-            this.theta = theta;
-            this.dead = dead;
+            //this.mod = mod;
+            //this.theta = theta;
+            //this.dead = dead;
             InitializeComponent();
         }
 
@@ -29,12 +38,6 @@ namespace MovRec
         {
             // pane used to draw your chart
             GraphPane myPane = new GraphPane();
-
-            // poing pair lists
-            PointPairList listPointsOne = new PointPairList();
-
-            // line item
-            LineItem myCurveOne;
 
             // set your pane
             myPane = zedGraphControl1.GraphPane;
@@ -46,27 +49,8 @@ namespace MovRec
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Acc Modulo";
 
-            // ---- CURVE ONE ----
-            // draw a sin curve
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[0, i, 0]);
-            }
-
-            // set lineitem to list of points
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            // ---------------------
-
-            // draw 
-            zedGraphControl1.AxisChange();
-
-            //-----------------------------------------------------------------------------------//
-
             // pane used to draw your second chart
             myPane = new GraphPane();
-
-            // poing pair lists
-            listPointsOne = new PointPairList();
             
             // set your pane
             myPane = zedGraphControl2.GraphPane;
@@ -78,137 +62,72 @@ namespace MovRec
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Giro Modulo";
 
-            // ---- CURVE ONE ----
-            // draw a sin curve
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[0, i, 1]);
-            }
-
-            // set lineitem to list of points
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            // ---------------------
-
-            // draw 
-            zedGraphControl2.AxisChange();
-            //----------------------------------------------------------------------------------//
             myPane = new GraphPane();
-            listPointsOne = new PointPairList();
             myPane = zedGraphControl3.GraphPane;
             myPane.Title.Text = "Modulo Accelerometro";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Acc Modulo";
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[1, i, 0]);
-            }
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            zedGraphControl3.AxisChange();
-            //--------------------------//
+
             myPane = new GraphPane();
-            listPointsOne = new PointPairList();
             myPane = zedGraphControl4.GraphPane;
             myPane.Title.Text = "Modulo Giroscopio";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Giro Modulo";
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[1, i, 1]);
-            }
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            zedGraphControl4.AxisChange();
-            //----------------------------------------------------------------------------------//
+            
             myPane = new GraphPane();
-            listPointsOne = new PointPairList();
             myPane = zedGraphControl5.GraphPane;
             myPane.Title.Text = "Modulo Accelerometro";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Acc Modulo";
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[2, i, 0]);
-            }
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            zedGraphControl5.AxisChange();
-            //--------------------------//
+   
             myPane = new GraphPane();
-            listPointsOne = new PointPairList();
             myPane = zedGraphControl6.GraphPane;
             myPane.Title.Text = "Modulo Giroscopio";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Giro Modulo";
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[2, i, 1]);
-            }
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            zedGraphControl6.AxisChange();
-            //----------------------------------------------------------------------------------//
+            
             myPane = new GraphPane();
-            listPointsOne = new PointPairList();
             myPane = zedGraphControl7.GraphPane;
             myPane.Title.Text = "Modulo Accelerometro";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Acc Modulo";
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[3, i, 0]);
-            }
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            zedGraphControl7.AxisChange();
-            //--------------------------//
+
             myPane = new GraphPane();
-            listPointsOne = new PointPairList();
             myPane = zedGraphControl8.GraphPane;
             myPane.Title.Text = "Modulo Giroscopio";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Giro Modulo";
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[3, i, 1]);
-            }
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            zedGraphControl8.AxisChange();
-            //----------------------------------------------------------------------------------//
+            
             myPane = new GraphPane();
-            listPointsOne = new PointPairList();
             myPane = zedGraphControl9.GraphPane;
             myPane.Title.Text = "Modulo Accelerometro";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Acc Modulo";
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[4, i, 0]);
-            }
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            zedGraphControl9.AxisChange();
-            //--------------------------//
+            
             myPane = new GraphPane();
-            listPointsOne = new PointPairList();
             myPane = zedGraphControl10.GraphPane;
             myPane.Title.Text = "Modulo Giroscopio";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Giro Modulo";
-            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, mod[4, i, 1]);
-            }
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            zedGraphControl10.AxisChange();
+
             //STAMPA THETA
+            // poing pair lists
+            PointPairList listPointsOne = new PointPairList();
+            // line item
+            LineItem myCurveOne;
             myPane = new GraphPane();
             listPointsOne = new PointPairList();
             myPane = zedGraphControl11.GraphPane;
             myPane.Title.Text = "Theta";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "THETA";
-            for (int i = 0; i < mod.GetLength(1); i++)
+/*            for (int i = 0; i < mod.GetLength(1); i++)
             {
                 listPointsOne.Add(i, theta[0, i, 0]);
             }
             myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Blue, SymbolType.Circle);
             zedGraphControl11.AxisChange();
-
+*/
             //DEAD
             myPane = new GraphPane();
             listPointsOne = new PointPairList();
@@ -216,14 +135,9 @@ namespace MovRec
             myPane.Title.Text = "Dead Reckoning";
             myPane.XAxis.Title.Text = "X";
             myPane.YAxis.Title.Text = "Y";
-            foreach (double[] item in dead)
-            {
-                listPointsOne.Add(item[0], item[1]);
-            }
             myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
-            zedGraphControl12.AxisChange();
-        }
 
+        }
         private void zedGraphControl1_Load(object sender, EventArgs e)
         {
 
@@ -231,7 +145,7 @@ namespace MovRec
 
         private void zedGraphControl2_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void zedGraphControl3_Load(object sender, EventArgs e)
@@ -277,6 +191,306 @@ namespace MovRec
         private void zedGraphControl12_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public void setText(String msg)
+        {
+            if (this.richTextBox1.InvokeRequired)
+            {
+                WriteTextBox wtxt = new WriteTextBox(setText);
+                this.Invoke(wtxt, new object[] { msg });
+            }
+            else
+            {
+                this.richTextBox1.AppendText(msg+ "\r\n");
+            }
+        }
+
+        public void updateModGraph(double[,,] mod, int numCampione)
+        {
+            if (this.zedGraphControl1.InvokeRequired || this.zedGraphControl2.InvokeRequired ||
+                this.zedGraphControl3.InvokeRequired || this.zedGraphControl4.InvokeRequired ||
+                this.zedGraphControl5.InvokeRequired || this.zedGraphControl6.InvokeRequired ||
+                this.zedGraphControl7.InvokeRequired || this.zedGraphControl8.InvokeRequired ||
+                this.zedGraphControl9.InvokeRequired || this.zedGraphControl10.InvokeRequired)
+            {
+                UpdateGraph updtgrp = new UpdateGraph(updateModGraph);
+                this.Invoke(updtgrp, new object[] { mod, numCampione });
+            }
+            else
+            {
+                int lung;
+                if (mod.GetLength(1) == 500)
+                    lung = 250;
+                else
+                    lung = mod.GetLength(1);
+                // poing pair lists
+                PointPairList listPointsOne = new PointPairList();
+                // line item
+                LineItem myCurveOne, myCurveTwo;
+                // ---- CURVE ONE ----
+                // draw a sin curve
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[0] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[1] = mod[0, i, 0];
+                    }
+                    if (numCampione > 0 && i== 0)
+                        listPointsOne.Add(lastPoint[0], lastPoint[1]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[0, i, 0]);
+                }
+                // set lineitem to list of points
+                myCurveOne = zedGraphControl1.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                // draw 
+                zedGraphControl1.AxisChange();
+                zedGraphControl1.Invalidate();
+                zedGraphControl1.Refresh();
+                //-----------------------------------------------------------------------------------//
+                listPointsOne = new PointPairList();
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[2] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[3] = mod[0, i, 1];
+                    }
+                    if (numCampione > 0 && i == 0)
+                        listPointsOne.Add(lastPoint[2], lastPoint[3]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[0, i, 1]);
+                }
+                myCurveTwo = zedGraphControl2.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                zedGraphControl2.AxisChange();
+                zedGraphControl2.Invalidate();
+                zedGraphControl2.Refresh();
+                listPointsOne = new PointPairList();
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[4] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[5] = mod[1, i, 0];
+                    }
+                    if (numCampione > 0 && i == 0)
+                        listPointsOne.Add(lastPoint[4], lastPoint[5]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[1, i, 0]);
+                }
+                myCurveOne = zedGraphControl3.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                zedGraphControl3.AxisChange();
+                zedGraphControl3.Invalidate();
+                zedGraphControl3.Refresh();
+
+                listPointsOne = new PointPairList();
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[6] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[7] = mod[1, i, 1];
+                    }
+                    if (numCampione > 0 && i == 0)
+                        listPointsOne.Add(lastPoint[6], lastPoint[7]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[1, i, 1]);
+                }
+                myCurveOne = zedGraphControl4.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                zedGraphControl4.AxisChange();
+                zedGraphControl4.Invalidate();
+                zedGraphControl4.Refresh();
+
+                listPointsOne = new PointPairList();
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[8] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[9] = mod[2, i, 0];
+                    }
+                    if (numCampione > 0 && i == 0)
+                        listPointsOne.Add(lastPoint[8], lastPoint[9]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[2, i, 0]);
+                }
+                myCurveOne = zedGraphControl5.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                zedGraphControl5.AxisChange();
+                zedGraphControl5.Invalidate();
+                zedGraphControl5.Refresh();
+
+                listPointsOne = new PointPairList();
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[10] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[11] = mod[2, i, 1];
+                    }
+                    if (numCampione > 0 && i == 0)
+                        listPointsOne.Add(lastPoint[10], lastPoint[11]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[2, i, 1]);
+                }
+                myCurveOne = zedGraphControl6.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                zedGraphControl6.AxisChange();
+                zedGraphControl6.Invalidate();
+                zedGraphControl6.Refresh();
+
+                listPointsOne = new PointPairList();
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[12] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[13] = mod[3, i, 0];
+                    }
+                    if (numCampione > 0 && i == 0)
+                        listPointsOne.Add(lastPoint[12], lastPoint[13]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[3, i, 0]);
+                }
+                myCurveOne = zedGraphControl7.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                zedGraphControl7.AxisChange();
+                zedGraphControl7.Invalidate();
+                zedGraphControl7.Refresh();
+
+                listPointsOne = new PointPairList();
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[14] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[15] = mod[3, i, 1];
+                    }
+                    if (numCampione > 0 && i == 0)
+                        listPointsOne.Add(lastPoint[14], lastPoint[15]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[3, i, 1]);
+                }
+                myCurveOne = zedGraphControl8.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                zedGraphControl8.AxisChange();
+                zedGraphControl8.Invalidate();
+                zedGraphControl8.Refresh();
+
+                listPointsOne = new PointPairList();
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[16] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[17] = mod[4, i, 0];
+                    }
+                    if (numCampione > 0 && i == 0)
+                        listPointsOne.Add(lastPoint[16], lastPoint[17]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[4, i, 0]);
+                }
+                myCurveOne = zedGraphControl9.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                zedGraphControl9.AxisChange();
+                zedGraphControl9.Invalidate();
+                zedGraphControl9.Refresh();
+
+                listPointsOne = new PointPairList();
+                for (int i = 0; i < lung; i++)
+                {
+                    if (i == lung - 1)
+                    {
+                        lastPoint[18] = ((0.02 * i) + (numCampione * 5));
+                        lastPoint[19] = mod[4, i, 1];
+                    }
+                    if (numCampione > 0 && i == 0)
+                        listPointsOne.Add(lastPoint[18], lastPoint[19]);
+                    listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[4, i, 1]);
+                }
+                myCurveOne = zedGraphControl10.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                zedGraphControl10.AxisChange();
+                zedGraphControl10.Invalidate();
+                zedGraphControl10.Refresh();
+            }
+        }
+
+        public void cleanModGraph()
+        {
+            if (this.zedGraphControl1.InvokeRequired || this.zedGraphControl2.InvokeRequired ||
+                this.zedGraphControl3.InvokeRequired || this.zedGraphControl4.InvokeRequired ||
+                this.zedGraphControl5.InvokeRequired || this.zedGraphControl6.InvokeRequired ||
+                this.zedGraphControl7.InvokeRequired || this.zedGraphControl8.InvokeRequired ||
+                this.zedGraphControl9.InvokeRequired || this.zedGraphControl10.InvokeRequired)
+            {
+                CleanGraph clngrp = new CleanGraph(cleanModGraph);
+                this.Invoke(clngrp, new object[] { });
+            }
+            else
+            {
+                if (zedGraphControl1.GraphPane.CurveList.Count != 0)
+                    zedGraphControl1.GraphPane.CurveList.Clear();
+                if (zedGraphControl2.GraphPane.CurveList.Count != 0)
+                    zedGraphControl2.GraphPane.CurveList.Clear();
+                if (zedGraphControl3.GraphPane.CurveList.Count != 0)
+                    zedGraphControl3.GraphPane.CurveList.Clear();
+                if (zedGraphControl4.GraphPane.CurveList.Count != 0)
+                    zedGraphControl4.GraphPane.CurveList.Clear();
+                if (zedGraphControl5.GraphPane.CurveList.Count != 0)
+                    zedGraphControl5.GraphPane.CurveList.Clear();
+                if (zedGraphControl6.GraphPane.CurveList.Count != 0)
+                    zedGraphControl6.GraphPane.CurveList.Clear();
+                if (zedGraphControl7.GraphPane.CurveList.Count != 0)
+                    zedGraphControl7.GraphPane.CurveList.Clear();
+                if (zedGraphControl8.GraphPane.CurveList.Count != 0)
+                    zedGraphControl8.GraphPane.CurveList.Clear();
+                if (zedGraphControl9.GraphPane.CurveList.Count != 0)
+                    zedGraphControl9.GraphPane.CurveList.Clear();
+                if (zedGraphControl10.GraphPane.CurveList.Count != 0)
+                    zedGraphControl10.GraphPane.CurveList.Clear();
+            }
+        }
+
+        public void updateDeadReckGraph(List<double[]> path)
+        {
+            if (this.zedGraphControl12.InvokeRequired)
+            {
+                UpdateDeadGraph d = new UpdateDeadGraph(updateDeadReckGraph);
+                this.Invoke(d, new object[] { path });
+            }
+            else
+            {
+                for (int i = 0; i < path.Count; i++)
+                {  
+                    zedGraphControl12.GraphPane.CurveList[0].AddPoint(path[i][0], path[i][1]); // Aggiungo x e y
+
+                    // Aggiorniamo il grafico ad ogni punto per creare un grafico in "real-time"  
+                    zedGraphControl12.AxisChange();
+                    zedGraphControl12.Invalidate();
+                    zedGraphControl12.Refresh();
+                }
+                // Aggiornamento del grafico 
+                zedGraphControl12.AxisChange();
+                zedGraphControl12.Invalidate();
+                zedGraphControl12.Refresh();
+            }
+        }
+
+        public void saveText()
+        {
+            if (this.richTextBox1.InvokeRequired)
+            {
+                SaveTextBox stxt = new SaveTextBox(saveText);
+                this.Invoke(stxt, new object[] { });
+            }
+            else
+            {
+                this.richTextBox1.SaveFile("C:/Users/Marco/Desktop/DIDATTICA/1° SEMESTRE/Programmazione e Amministrazione Sistema/doc.txt");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (button1.Enabled)
+            {
+                button1.Text = "AVVIATO";
+                button1.Enabled = false;
+                MovRecSocket acq = new MovRecSocket();
+                Thread acquisitionThread = new Thread(new ThreadStart(MovRecSocket.Start));
+                acquisitionThread.Start();
+            }
         }
     }
 }

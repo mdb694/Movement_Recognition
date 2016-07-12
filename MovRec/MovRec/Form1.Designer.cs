@@ -49,6 +49,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.zedGraphControl12 = new ZedGraph.ZedGraphControl();
+            this.button1 = new System.Windows.Forms.Button();
             this.Sensor1.SuspendLayout();
             this.Sensor2.SuspendLayout();
             this.Sensor3.SuspendLayout();
@@ -279,7 +280,7 @@
             // 
             // zedGraphControl11
             // 
-            this.zedGraphControl11.Location = new System.Drawing.Point(1298, 644);
+            this.zedGraphControl11.Location = new System.Drawing.Point(1298, 747);
             this.zedGraphControl11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zedGraphControl11.Name = "zedGraphControl11";
             this.zedGraphControl11.ScrollGrace = 0D;
@@ -295,15 +296,16 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(1298, 28);
+            this.richTextBox1.Location = new System.Drawing.Point(1298, 67);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(621, 163);
+            this.richTextBox1.Size = new System.Drawing.Size(621, 227);
             this.richTextBox1.TabIndex = 10;
             this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // zedGraphControl12
             // 
-            this.zedGraphControl12.Location = new System.Drawing.Point(1298, 198);
+            this.zedGraphControl12.Location = new System.Drawing.Point(1298, 337);
             this.zedGraphControl12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zedGraphControl12.Name = "zedGraphControl12";
             this.zedGraphControl12.ScrollGrace = 0D;
@@ -317,6 +319,16 @@
             this.zedGraphControl12.TabIndex = 11;
             this.zedGraphControl12.Load += new System.EventHandler(this.zedGraphControl12_Load);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1298, 26);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(130, 35);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "START";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Analisi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -324,6 +336,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1906, 1037);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.zedGraphControl12);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.zedGraphControl11);
@@ -368,5 +381,6 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ZedGraph.ZedGraphControl zedGraphControl12;
+        private System.Windows.Forms.Button button1;
     }
 }
