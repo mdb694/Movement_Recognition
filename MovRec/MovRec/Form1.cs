@@ -16,6 +16,7 @@ namespace MovRec
     {
         double[] lastPoint = new double[20];
         public DeadReckoning dr;
+        double[] lastThetaPoint = new double[2];
 
         delegate void WriteTextBox(string msg);
         delegate void SaveTextBox();
@@ -490,10 +491,30 @@ namespace MovRec
             }
             else
             {
-                for (int i = 0; i < orient.GetLength(1); i++)
+                if (numCampione > 0)
                 {
-                    zedGraphControl11.GraphPane.CurveList[0].AddPoint(((0.02 * i) + (numCampione * 5)), orient[0, i, 0]); // Aggiungo x e y
+                    double[,,] newTheta = new double[1, orient.GetLength(1) + 1, 1];
+                    newTheta[0, 0, 0] = lastThetaPoint[1];
+                    for (int i = 1; i < orient.GetLength(1); i++)
+                    {
+                        newTheta[0, i, 0] = orient[0, i - 1, 0];
+                    }
+                    orient = Funzioni.eliminaDiscont(newTheta);
+                }
+                int lung;
+                if (orient.GetLength(1) >= 500)
+                    lung = 500 / 2 ;
+                else
+                    lung = orient.GetLength(1);
 
+                for (int i = 0; i < lung; i++)
+                {
+                    zedGraphControl11.GraphPane.CurveList[0].AddPoint(((0.02 * i) + (numCampione * 5)), orient[0, i+1, 0]); // Aggiungo x e y
+                    if (i == lung - 1)
+                    {
+                        lastThetaPoint[0] = ((0.02 * i) + (numCampione * 5));
+                        lastThetaPoint[1] = orient[0, i, 0];
+                    }
                     zedGraphControl11.AxisChange();
                     zedGraphControl11.Invalidate();
                     zedGraphControl11.Refresh();

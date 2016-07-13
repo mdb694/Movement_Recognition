@@ -135,7 +135,6 @@ public class Funzioni
     //FUNZIONE AUSILIARIA
     public static double[,,] eliminaDiscont(double[,,] values)
     {
-        double[,,] result = new double[values.GetLength(0),values.GetLength(1),values.GetLength(2)];
         for (int i = 0; i < values.GetLength(0); i++)
         {
             for (int j = 1; j < values.GetLength(1); j++)
@@ -146,20 +145,20 @@ public class Funzioni
                     {
                         if ((values[i, j - 1, k]) > (values[i, j, k]))
                         {
-                            result[i, j, k] = values[i, j, k] + Math.PI * 2;
+                            values[i, j, k] = values[i, j, k] + Math.PI * 2;
                         }
                         else if ((values[i, j - 1, k]) < (values[i, j, k]))
                         {
-                            result[i, j, k] = values[i, j, k] - Math.PI * 2;
+                            values[i, j, k] = values[i, j, k] - Math.PI * 2;
                         }
 
                     }
                     else
-                        result[i, j, k] = values[i, j, k];
+                        values[i, j, k] = values[i, j, k];
                 }
             }
         }
-        return result;
+        return values;
     }
     ///FUNZIONI PER LE STAMPE A CONSOLLE DI DEBUG
     public static void printmultimatrix(double[,,] matrix)

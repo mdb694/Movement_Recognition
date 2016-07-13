@@ -38,11 +38,7 @@ public class Recognizer
             for(int j=0; j< values.GetLength(1); j++)
             {
                 result[i, j, 0] = Math.Atan2(values[i, j, 7] , values[i, j, 8]);
- /*               if (j == 0 && thetaBefore != 0)
-                {
-                    result[i,j,0] = result [i,j,0]
-                }
- */           }
+           }
         }
 
         result = Funzioni.eliminaDiscont(result);
