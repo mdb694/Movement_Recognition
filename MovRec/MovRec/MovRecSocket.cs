@@ -11,6 +11,7 @@ namespace MovRec {
         private static int sizewin = 500;
         private static int maxSensori = 10;
         private static int numCampioni = 0;
+        private static List<String> lines = new List<string>();
 
         static TcpListener listener;
         static Socket socket;
@@ -42,8 +43,10 @@ namespace MovRec {
                         //PULISCO??
                         Program.getForm().cleanModGraph();
                         Program.getForm().cleanDeadReckGraph();
+                        Program.getForm().cleanThetaOrGraph();
+                        lines.Clear();
                         numCampioni = 0;
-
+                        lines.Add("NumSensore;xAcc;yAcc;zAcc;xGiro;yGiro;zGiro;xMagne;yMagne;zMagne;q1;q2;q3;q4;");
                         while (!(tem[0] == 0xFF && tem[1] == 0x32)) // cerca la sequenza FF-32
                         {
                             tem[0] = tem[1];
@@ -109,11 +112,12 @@ namespace MovRec {
                             array.Add(new List<double>()); // una lista per ogni sensore
                             t[x] = 5 + (52 * x);
                         }
-                        
+                        String csvOutput;
                         while (pacchetto.Length > 0)
                         {
                             for (int i = 0; i < numSensori; i++)
                             {
+                                csvOutput =(i+1) + ";";
                                 byte[] temp = new byte[4];
                                 for (int tr = 0; tr < 13; tr++)// 13 campi, 3 * 3 + 4
                                 {
@@ -133,8 +137,10 @@ namespace MovRec {
                                     }
                                     var valore = BitConverter.ToSingle(temp, 0); // conversione
                                     array[i].Add(valore); // memorizzazione
+                                    csvOutput = csvOutput + valore + ";";
                                     t[i] += 4;
                                 }
+                                lines.Add(csvOutput);
                             }
                             tempArray = array.Select(x => x.ToList()).ToList();
                             sensorValue.Add(tempArray);
@@ -220,6 +226,17 @@ namespace MovRec {
                             }
 
                         }
+                        // Set a variable to the My Documents path.
+                        string mydocpath =
+                            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                        // Write the string array to a new file named "WriteLines.txt".
+                        using (StreamWriter outputFile = new StreamWriter(mydocpath + @"\data.csv"))
+                        {
+                            foreach (string line in lines)
+                                outputFile.WriteLine(line);
+                        }
+
                         stream.Close();
                         socket.Close();
                         Program.getForm().setText(DateTime.Now.ToString() + " :: Disconnesso. Attendo riconnessione...");

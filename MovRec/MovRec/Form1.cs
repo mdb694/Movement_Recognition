@@ -19,8 +19,11 @@ namespace MovRec
 
         delegate void WriteTextBox(string msg);
         delegate void SaveTextBox();
+        delegate void LoadImage(String address);
         delegate void UpdateGraph(double[,,] mod, int numCampione);
         delegate void CleanGraph();
+        delegate void UpdateThetaGraph(double[,,] orient, int numCampione);
+        delegate void CleanThetaGraph();
         delegate void UpdateDeadGraph(List<double[]> path);
         delegate void CleanDeadGraph();
 
@@ -112,6 +115,7 @@ namespace MovRec
             PointPairList listPointsOne = new PointPairList();
             // line item
             LineItem myCurveOne;
+            LineItem myThetaCurve;
             myPane = new GraphPane();
             listPointsOne = new PointPairList();
             myPane = zedGraphControl11.GraphPane;
@@ -121,10 +125,10 @@ namespace MovRec
 /*            for (int i = 0; i < mod.GetLength(1); i++)
             {
                 listPointsOne.Add(i, theta[0, i, 0]);
-            }
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Blue, SymbolType.Circle);
-            zedGraphControl11.AxisChange();
-*/
+           }
+*/          myThetaCurve = myPane.AddCurve(null, listPointsOne, Color.Blue, SymbolType.Circle);
+//            zedGraphControl11.AxisChange();
+
             //DEAD
             myPane = new GraphPane();
             listPointsOne = new PointPairList();
@@ -477,6 +481,43 @@ namespace MovRec
             }
         }
 
+        public void updateThetaOrGraph(double[,,] orient, int numCampione)
+        {
+            if (this.zedGraphControl11.InvokeRequired)
+            {
+                UpdateThetaGraph d = new UpdateThetaGraph(updateThetaOrGraph);
+                this.Invoke(d, new object[] {orient, numCampione });
+            }
+            else
+            {
+                for (int i = 0; i < orient.GetLength(1); i++)
+                {
+                    zedGraphControl11.GraphPane.CurveList[0].AddPoint(((0.02 * i) + (numCampione * 5)), orient[0, i, 0]); // Aggiungo x e y
+
+                    zedGraphControl11.AxisChange();
+                    zedGraphControl11.Invalidate();
+                    zedGraphControl11.Refresh();
+                }
+                zedGraphControl11.AxisChange();
+                zedGraphControl11.Invalidate();
+                zedGraphControl11.Refresh();
+            }
+        }
+
+        public void cleanThetaOrGraph()
+        {
+            if (this.zedGraphControl11.InvokeRequired)
+            {
+                CleanThetaGraph clndr = new CleanThetaGraph(cleanThetaOrGraph);
+                this.Invoke(clndr, new object[] { });
+            }
+            else
+            {
+                if (zedGraphControl11.GraphPane.CurveList.Count != 0)
+                    zedGraphControl11.GraphPane.CurveList[0].Clear();
+            }
+        }
+
         public void saveText()
         {
             if (this.richTextBox1.InvokeRequired)
@@ -486,7 +527,23 @@ namespace MovRec
             }
             else
             {
-                this.richTextBox1.SaveFile("C:/Users/Marco/Desktop/DIDATTICA/1° SEMESTRE/Programmazione e Amministrazione Sistema/log.rtf");
+                string mydocpath =
+                            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                this.richTextBox1.SaveFile(mydocpath + @"/log.rtf");
+            }
+        }
+
+        public void loadImage(String address)
+        {
+            if (this.pictureBox1.InvokeRequired)
+            {
+                LoadImage ldimg = new LoadImage(loadImage);
+                this.Invoke(ldimg, new object[] { address });
+            }
+            else
+            {
+                pictureBox1.ImageLocation = address;
+                this.pictureBox1.Load();
             }
         }
 
@@ -512,6 +569,11 @@ namespace MovRec
         private void Analisi_FormClosing(object sender, FormClosingEventArgs e)
         {
             saveText();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

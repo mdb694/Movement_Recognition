@@ -51,11 +51,13 @@
             this.zedGraphControl12 = new ZedGraph.ZedGraphControl();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Sensor1.SuspendLayout();
             this.Sensor2.SuspendLayout();
             this.Sensor3.SuspendLayout();
             this.Sensor4.SuspendLayout();
             this.Sensor5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // zedGraphControl1
@@ -281,7 +283,7 @@
             // 
             // zedGraphControl11
             // 
-            this.zedGraphControl11.Location = new System.Drawing.Point(1298, 747);
+            this.zedGraphControl11.Location = new System.Drawing.Point(1298, 1257);
             this.zedGraphControl11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zedGraphControl11.Name = "zedGraphControl11";
             this.zedGraphControl11.ScrollGrace = 0D;
@@ -306,7 +308,7 @@
             // 
             // zedGraphControl12
             // 
-            this.zedGraphControl12.Location = new System.Drawing.Point(1298, 337);
+            this.zedGraphControl12.Location = new System.Drawing.Point(1298, 644);
             this.zedGraphControl12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zedGraphControl12.Name = "zedGraphControl12";
             this.zedGraphControl12.ScrollGrace = 0D;
@@ -341,6 +343,16 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(1298, 310);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(267, 267);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // Analisi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -348,6 +360,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1906, 1037);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.zedGraphControl12);
@@ -369,7 +382,9 @@
             this.Sensor3.ResumeLayout(false);
             this.Sensor4.ResumeLayout(false);
             this.Sensor5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -397,5 +412,6 @@
         private ZedGraph.ZedGraphControl zedGraphControl12;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
