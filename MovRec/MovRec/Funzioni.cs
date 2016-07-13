@@ -132,6 +132,7 @@ public class Funzioni
         return result;
     }
 
+    //FUNZIONE AUSILIARIA
     public static double[,,] eliminaDiscont(double[,,] values)
     {
         double[,,] result = new double[values.GetLength(0),values.GetLength(1),values.GetLength(2)];

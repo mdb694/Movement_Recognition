@@ -28,7 +28,6 @@ namespace MovRec {
 
                         listener.Start();
                         socket = listener.AcceptSocket(); // blocca
-                        DateTime time = DateTime.Now;
                         Program.getForm().setText(DateTime.Now.ToString() + " :: Connessione stabilita!");
 
                         Stream stream = new NetworkStream(socket);
@@ -98,6 +97,7 @@ namespace MovRec {
                         List<List<List<double>>> sensorValue = new List<List<List<double>>>();
                         double[,,] sensorValueArray;
                         Analizzatore analiser = new Analizzatore();
+                        Program.getForm().setText(DateTime.Now.ToString() + " :: Inizio elaborazione dati");
 
                         int campioni = 0;
                         int leftband = 0;
@@ -179,7 +179,6 @@ namespace MovRec {
 
                                 sensorValue.RemoveRange(0, sensorValue.Count / 2);
                                 leftband = campioni - sizewin / 2;
-                                time = time.AddSeconds(250 * 0.02);
                             }
 
                             if (numSensori < 5) // lettura pacchetto seguente

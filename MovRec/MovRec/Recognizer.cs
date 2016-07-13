@@ -62,7 +62,7 @@ public class Recognizer
                 }
                 else
                 {
-                    if (values[0, i, 0] >= 3.7 && values[0, i, 0] < 7)
+                    if (values[0, i, 0] >= 3.7 && values[0, i, 0] < 7.2)
                     {
                         result[i] = 2;//Sit
                     }
