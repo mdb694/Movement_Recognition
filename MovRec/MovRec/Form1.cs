@@ -14,31 +14,28 @@ namespace MovRec
 {
     public partial class Analisi : Form
     {
-        double[,,] mod;
-        double[,,] theta;
-        List<double[]> dead;
         double[] lastPoint = new double[20];
+        public DeadReckoning dr;
 
         delegate void WriteTextBox(string msg);
         delegate void SaveTextBox();
         delegate void UpdateGraph(double[,,] mod, int numCampione);
         delegate void CleanGraph();
         delegate void UpdateDeadGraph(List<double[]> path);
-        delegate void ClearDeadGraph();
+        delegate void CleanDeadGraph();
 
-        public Analisi(/*double[,,] mod,double[,,]theta, List<double[]> dead*/)
+        public Analisi()
         {
-            //this.mod = mod;
-            //this.theta = theta;
-            //this.dead = dead;
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            dr = new DeadReckoning();
             // pane used to draw your chart
             GraphPane myPane = new GraphPane();
-
+            //setto il textbox a read only
+            this.richTextBox1.ReadOnly = true;
             // set your pane
             myPane = zedGraphControl1.GraphPane;
 
@@ -456,15 +453,27 @@ namespace MovRec
                 {  
                     zedGraphControl12.GraphPane.CurveList[0].AddPoint(path[i][0], path[i][1]); // Aggiungo x e y
 
-                    // Aggiorniamo il grafico ad ogni punto per creare un grafico in "real-time"  
                     zedGraphControl12.AxisChange();
                     zedGraphControl12.Invalidate();
                     zedGraphControl12.Refresh();
                 }
-                // Aggiornamento del grafico 
                 zedGraphControl12.AxisChange();
                 zedGraphControl12.Invalidate();
                 zedGraphControl12.Refresh();
+            }
+        }
+
+        public void cleanDeadReckGraph()
+        {
+            if (this.zedGraphControl12.InvokeRequired)
+            {
+                CleanDeadGraph clndr = new CleanDeadGraph(cleanDeadReckGraph);
+                this.Invoke(clndr, new object[] { });
+            }
+            else
+            {
+                if (zedGraphControl12.GraphPane.CurveList.Count != 0)
+                    zedGraphControl12.GraphPane.CurveList[0].Clear();
             }
         }
 
@@ -477,7 +486,7 @@ namespace MovRec
             }
             else
             {
-                this.richTextBox1.SaveFile("C:/Users/Marco/Desktop/DIDATTICA/1° SEMESTRE/Programmazione e Amministrazione Sistema/doc.txt");
+                this.richTextBox1.SaveFile("C:/Users/Marco/Desktop/DIDATTICA/1° SEMESTRE/Programmazione e Amministrazione Sistema/log.rtf");
             }
         }
 
@@ -491,6 +500,18 @@ namespace MovRec
                 Thread acquisitionThread = new Thread(new ThreadStart(MovRecSocket.Start));
                 acquisitionThread.Start();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            saveText();
+            MessageBox.Show("File di Log salvato correttamente", "Conferma Salvataggio",
+            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void Analisi_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            saveText();
         }
     }
 }

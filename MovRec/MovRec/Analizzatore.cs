@@ -19,13 +19,11 @@ namespace MovRec
         {
             double[,,] modulo = Funzioni.modulo(sensorValueData);
             double[,,] eulero = Funzioni.eulero(sensorValueData);
-            eulero = Funzioni.eliminaDiscont(eulero);
-            modulo = Funzioni.smoothing(modulo, 10);
-            List<double[]> pathDR = DeadReckoning.deadreck(modulo, eulero, 500);
+            Program.getForm().dr.deadreck(modulo, eulero, 500, numCampione);
 
+            modulo = Funzioni.smoothing(modulo, 10);
             Program.getForm().updateModGraph(modulo,numCampione);
-            Program.getForm().updateDeadReckGraph(pathDR);
-            pathDR.Clear();
+
         }
     }
 }

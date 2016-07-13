@@ -50,6 +50,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.zedGraphControl12 = new ZedGraph.ZedGraphControl();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.Sensor1.SuspendLayout();
             this.Sensor2.SuspendLayout();
             this.Sensor3.SuspendLayout();
@@ -329,6 +330,17 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button2
+            // 
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button2.Location = new System.Drawing.Point(1445, 26);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(131, 35);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "SALVA LOG";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Analisi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -336,6 +348,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1906, 1037);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.zedGraphControl12);
             this.Controls.Add(this.richTextBox1);
@@ -349,6 +362,7 @@
             this.Name = "Analisi";
             this.Text = "Monitoraggio";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Analisi_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Sensor1.ResumeLayout(false);
             this.Sensor2.ResumeLayout(false);
@@ -382,5 +396,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ZedGraph.ZedGraphControl zedGraphControl12;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

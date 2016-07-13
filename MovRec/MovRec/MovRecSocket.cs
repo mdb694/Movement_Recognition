@@ -42,6 +42,7 @@ namespace MovRec {
 
                         //PULISCO??
                         Program.getForm().cleanModGraph();
+                        Program.getForm().cleanDeadReckGraph();
                         numCampioni = 0;
 
                         while (!(tem[0] == 0xFF && tem[1] == 0x32)) // cerca la sequenza FF-32
