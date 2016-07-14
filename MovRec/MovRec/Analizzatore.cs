@@ -23,12 +23,42 @@ namespace MovRec
             double[,,] modulo = Funzioni.modulo(sensorValueData);
             double[,,] eulero = Funzioni.eulero(sensorValueData);
             double[,,] orient = Recognizer.orientamento(rawData);
+            List<String> msg = new List<string>();
 
             Program.getForm().dr.deadreck(modulo, eulero, 500, numCampione);
 
             modulo = Funzioni.smoothing(modulo, 10);
+            orient = Funzioni.smoothing(orient, 15);
             Program.getForm().updateModGraph(modulo,numCampione);
             Program.getForm().updateThetaOrGraph(orient, numCampione);
+
+            double firstElement = orient[0,0,0];
+            int a = 1;
+            int j = 0;
+
+            while (a < orient.GetLength(1))
+            {
+                j = a;
+                while (a < orient.GetLength(1) && orient[0,a,0] >= orient[0,a - 1,0])
+                {
+                    a++;
+                }
+                if (Math.Abs(orient[0,a - 1,0] - firstElement) > 0.5)
+                {  
+                    msg.Add(time.AddSeconds((numCampione * 5) + (0.02 * a)).ToString()+" :: Girato a sinistra");
+                    firstElement = orient[0,a - 1,0];
+                }
+                j = a;
+                while (a < orient.GetLength(1) && orient[0, a, 0] < orient[0, a - 1, 0])
+                { 
+                    a++;
+                }
+                if (Math.Abs(orient[0, a - 1, 0] - firstElement) > 0.5)
+                {
+                    msg.Add(time.AddSeconds((numCampione * 5) + (0.02 * a)).ToString()+" :: Girato a destra");
+                    firstElement = orient[0,a - 1,0];
+                }
+            }
 
             int[] position = Recognizer.posizioneCorpo(rawData);
             String output="";
@@ -46,7 +76,7 @@ namespace MovRec
                 before = position[i - 1];
                 if (!write && i != length-2)
                 {
-                    output = output + DateTime.Now.ToString();
+                    output = output + (time.AddSeconds((numCampione * 5) + (0.02 * i))).ToString();
                     write = true;
                 }
 
@@ -67,28 +97,37 @@ namespace MovRec
                 }
                 if (before == 0)
                 {
-                    output = output + " - " + DateTime.Now.ToString() + " :: Sdraiato\r\n";
+                    output = output + " - " + (time.AddSeconds((numCampione * 5) + (0.02 * i))).ToString() + " :: Sdraiato\n";
                     write = false;
                 }
                 if (before == 1)
                 {
-                    output = output + " - " + DateTime.Now.ToString() + " :: Sdraiato/Seduto\r\n";
+                    output = output + " - " + (time.AddSeconds((numCampione * 5) + (0.02 * i))).ToString() + " :: Sdraiato/Seduto\n";
                     write = false;
                 }
                 if (before == 2 )
                 {
-                    output = output + " - " + DateTime.Now.ToString() + " :: Seduto\r\n";
+                    output = output + " - " + (time.AddSeconds((numCampione * 5) + (0.02 * i))).ToString() + " :: Seduto\n";
                     write = false;
                 }
                 if (before == 3)
                 {
-                    output = output + " - " + DateTime.Now.ToString() + " :: In piedi\r\n";
+                    output = output + " - " + (time.AddSeconds((numCampione * 5) + (0.02 * i))).ToString() + " :: In piedi\n";
                     write = false;
                 }
                 i++;
                 occ = 1;
             }
-            Program.getForm().setText(output.Remove(output.Length - 2));
+            string[] splitted  = output.Split('\n');
+            foreach (var line in splitted)
+            {
+                msg.Add(line);
+            }
+            msg.Sort();
+            foreach (var item in msg)
+            {
+                Program.getForm().setText(item);
+            }
         }
     }
 }

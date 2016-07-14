@@ -137,7 +137,7 @@ namespace MovRec
             myPane.Title.Text = "Dead Reckoning";
             myPane.XAxis.Title.Text = "X";
             myPane.YAxis.Title.Text = "Y";
-            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+            myCurveOne = myPane.AddCurve(null, listPointsOne, Color.Gold, SymbolType.Diamond);
 
         }
         private void zedGraphControl1_Load(object sender, EventArgs e)
@@ -184,7 +184,6 @@ namespace MovRec
         {
 
         }
-
         private void chart1_Click(object sender, EventArgs e)
         {
 
@@ -507,9 +506,9 @@ namespace MovRec
                 else
                     lung = orient.GetLength(1);
 
-                for (int i = 0; i < lung; i++)
+                for (int i = 1; i < lung; i++)
                 {
-                    zedGraphControl11.GraphPane.CurveList[0].AddPoint(((0.02 * i) + (numCampione * 5)), orient[0, i+1, 0]); // Aggiungo x e y
+                    zedGraphControl11.GraphPane.CurveList[0].AddPoint(((0.02 * (i-1)) + (numCampione * 5)), orient[0, i, 0]); // Aggiungo x e y
                     if (i == lung - 1)
                     {
                         lastThetaPoint[0] = ((0.02 * i) + (numCampione * 5));
