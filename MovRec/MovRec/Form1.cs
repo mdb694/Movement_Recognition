@@ -111,10 +111,8 @@ namespace MovRec
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "Giro Modulo";
 
-            //STAMPA THETA
-            // poing pair lists
+            //THETA
             PointPairList listPointsOne = new PointPairList();
-            // line item
             LineItem myCurveOne;
             LineItem myThetaCurve;
             myPane = new GraphPane();
@@ -123,12 +121,7 @@ namespace MovRec
             myPane.Title.Text = "Theta";
             myPane.XAxis.Title.Text = "Tempo";
             myPane.YAxis.Title.Text = "THETA";
-/*            for (int i = 0; i < mod.GetLength(1); i++)
-            {
-                listPointsOne.Add(i, theta[0, i, 0]);
-           }
-*/          myThetaCurve = myPane.AddCurve(null, listPointsOne, Color.Blue, SymbolType.Circle);
-//            zedGraphControl11.AxisChange();
+             myThetaCurve = myPane.AddCurve(null, listPointsOne, Color.Blue, SymbolType.None);
 
             //DEAD
             myPane = new GraphPane();
@@ -248,7 +241,7 @@ namespace MovRec
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[0, i, 0]);
                 }
                 // set lineitem to list of points
-                myCurveOne = zedGraphControl1.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveOne = zedGraphControl1.GraphPane.AddCurve(null, listPointsOne, Color.Red, SymbolType.Circle);
                 // draw 
                 zedGraphControl1.AxisChange();
                 zedGraphControl1.Invalidate();
@@ -266,7 +259,7 @@ namespace MovRec
                         listPointsOne.Add(lastPoint[2], lastPoint[3]);
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[0, i, 1]);
                 }
-                myCurveTwo = zedGraphControl2.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveTwo = zedGraphControl2.GraphPane.AddCurve(null, listPointsOne, Color.Green, SymbolType.Circle);
                 zedGraphControl2.AxisChange();
                 zedGraphControl2.Invalidate();
                 zedGraphControl2.Refresh();
@@ -282,7 +275,7 @@ namespace MovRec
                         listPointsOne.Add(lastPoint[4], lastPoint[5]);
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[1, i, 0]);
                 }
-                myCurveOne = zedGraphControl3.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveOne = zedGraphControl3.GraphPane.AddCurve(null, listPointsOne, Color.Red, SymbolType.Circle);
                 zedGraphControl3.AxisChange();
                 zedGraphControl3.Invalidate();
                 zedGraphControl3.Refresh();
@@ -299,7 +292,7 @@ namespace MovRec
                         listPointsOne.Add(lastPoint[6], lastPoint[7]);
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[1, i, 1]);
                 }
-                myCurveOne = zedGraphControl4.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveOne = zedGraphControl4.GraphPane.AddCurve(null, listPointsOne, Color.Green, SymbolType.Circle);
                 zedGraphControl4.AxisChange();
                 zedGraphControl4.Invalidate();
                 zedGraphControl4.Refresh();
@@ -316,7 +309,7 @@ namespace MovRec
                         listPointsOne.Add(lastPoint[8], lastPoint[9]);
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[2, i, 0]);
                 }
-                myCurveOne = zedGraphControl5.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveOne = zedGraphControl5.GraphPane.AddCurve(null, listPointsOne, Color.Red, SymbolType.Circle);
                 zedGraphControl5.AxisChange();
                 zedGraphControl5.Invalidate();
                 zedGraphControl5.Refresh();
@@ -333,7 +326,7 @@ namespace MovRec
                         listPointsOne.Add(lastPoint[10], lastPoint[11]);
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[2, i, 1]);
                 }
-                myCurveOne = zedGraphControl6.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveOne = zedGraphControl6.GraphPane.AddCurve(null, listPointsOne, Color.Green, SymbolType.Circle);
                 zedGraphControl6.AxisChange();
                 zedGraphControl6.Invalidate();
                 zedGraphControl6.Refresh();
@@ -350,7 +343,7 @@ namespace MovRec
                         listPointsOne.Add(lastPoint[12], lastPoint[13]);
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[3, i, 0]);
                 }
-                myCurveOne = zedGraphControl7.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveOne = zedGraphControl7.GraphPane.AddCurve(null, listPointsOne, Color.Red, SymbolType.Circle);
                 zedGraphControl7.AxisChange();
                 zedGraphControl7.Invalidate();
                 zedGraphControl7.Refresh();
@@ -367,7 +360,7 @@ namespace MovRec
                         listPointsOne.Add(lastPoint[14], lastPoint[15]);
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[3, i, 1]);
                 }
-                myCurveOne = zedGraphControl8.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveOne = zedGraphControl8.GraphPane.AddCurve(null, listPointsOne, Color.Green, SymbolType.Circle);
                 zedGraphControl8.AxisChange();
                 zedGraphControl8.Invalidate();
                 zedGraphControl8.Refresh();
@@ -384,7 +377,7 @@ namespace MovRec
                         listPointsOne.Add(lastPoint[16], lastPoint[17]);
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[4, i, 0]);
                 }
-                myCurveOne = zedGraphControl9.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveOne = zedGraphControl9.GraphPane.AddCurve(null, listPointsOne, Color.Red, SymbolType.Circle);
                 zedGraphControl9.AxisChange();
                 zedGraphControl9.Invalidate();
                 zedGraphControl9.Refresh();
@@ -401,7 +394,7 @@ namespace MovRec
                         listPointsOne.Add(lastPoint[18], lastPoint[19]);
                     listPointsOne.Add(((0.02 * i) + (numCampione * 5)), mod[4, i, 1]);
                 }
-                myCurveOne = zedGraphControl10.GraphPane.AddCurve(null, listPointsOne, Color.Black, SymbolType.Circle);
+                myCurveOne = zedGraphControl10.GraphPane.AddCurve(null, listPointsOne, Color.Green, SymbolType.Circle);
                 zedGraphControl10.AxisChange();
                 zedGraphControl10.Invalidate();
                 zedGraphControl10.Refresh();

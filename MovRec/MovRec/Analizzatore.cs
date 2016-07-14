@@ -43,7 +43,7 @@ namespace MovRec
                 {
                     a++;
                 }
-                if (Math.Abs(orient[0,a - 1,0] - firstElement) > 0.5)
+                if (Math.Abs(orient[0,a - 1,0] - firstElement) > 0.85)//Differenza di 45 gradi
                 {  
                     msg.Add(time.AddSeconds((numCampione * 5) + (0.02 * a)).ToString()+" :: Girato a sinistra");
                     firstElement = orient[0,a - 1,0];
@@ -53,7 +53,7 @@ namespace MovRec
                 { 
                     a++;
                 }
-                if (Math.Abs(orient[0, a - 1, 0] - firstElement) > 0.5)
+                if (Math.Abs(orient[0, a - 1, 0] - firstElement) > 0.85)//Differenza di 45 gradi
                 {
                     msg.Add(time.AddSeconds((numCampione * 5) + (0.02 * a)).ToString()+" :: Girato a destra");
                     firstElement = orient[0,a - 1,0];
@@ -124,9 +124,14 @@ namespace MovRec
                 msg.Add(line);
             }
             msg.Sort();
+            bool first = true;
             foreach (var item in msg)
             {
-                Program.getForm().setText(item);
+                if (!first)
+                {
+                    Program.getForm().setText(item);
+                }
+                first = false;
             }
         }
     }

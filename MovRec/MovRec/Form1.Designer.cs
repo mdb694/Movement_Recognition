@@ -283,7 +283,7 @@
             // 
             // zedGraphControl11
             // 
-            this.zedGraphControl11.Location = new System.Drawing.Point(1298, 1257);
+            this.zedGraphControl11.Location = new System.Drawing.Point(1298, 1100);
             this.zedGraphControl11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zedGraphControl11.Name = "zedGraphControl11";
             this.zedGraphControl11.ScrollGrace = 0D;
@@ -293,7 +293,7 @@
             this.zedGraphControl11.ScrollMinX = 0D;
             this.zedGraphControl11.ScrollMinY = 0D;
             this.zedGraphControl11.ScrollMinY2 = 0D;
-            this.zedGraphControl11.Size = new System.Drawing.Size(621, 263);
+            this.zedGraphControl11.Size = new System.Drawing.Size(690, 416);
             this.zedGraphControl11.TabIndex = 9;
             this.zedGraphControl11.Load += new System.EventHandler(this.zedGraphControl11_Load);
             // 
@@ -301,7 +301,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(1298, 67);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(621, 227);
+            this.richTextBox1.Size = new System.Drawing.Size(690, 227);
             this.richTextBox1.TabIndex = 10;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -318,7 +318,7 @@
             this.zedGraphControl12.ScrollMinX = 0D;
             this.zedGraphControl12.ScrollMinY = 0D;
             this.zedGraphControl12.ScrollMinY2 = 0D;
-            this.zedGraphControl12.Size = new System.Drawing.Size(621, 402);
+            this.zedGraphControl12.Size = new System.Drawing.Size(690, 415);
             this.zedGraphControl12.TabIndex = 11;
             this.zedGraphControl12.Load += new System.EventHandler(this.zedGraphControl12_Load);
             // 
@@ -345,7 +345,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(1473, 300);
+            this.pictureBox1.Location = new System.Drawing.Point(1511, 300);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(267, 267);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
